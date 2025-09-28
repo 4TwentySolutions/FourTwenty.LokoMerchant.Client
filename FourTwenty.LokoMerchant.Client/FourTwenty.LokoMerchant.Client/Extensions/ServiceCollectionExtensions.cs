@@ -1,3 +1,4 @@
+using FourTwenty.LokoMerchant.Client.Authorization;
 using FourTwenty.LokoMerchant.Client.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -38,6 +39,10 @@ public static class ServiceCollectionExtensions
             services.Configure(configureOptions);
         }
 
+        // Register token provider and authorization handler
+        services.AddScoped<IBearerTokenProvider, BearerTokenProvider>();
+        services.AddTransient<LokoAuthorizationHandler>();
+
         // Register HttpClient for identity server
         services.AddHttpClient<ILokoMerchantIdentityClient, LokoMerchantIdentityClient>((serviceProvider, client) =>
         {
@@ -45,25 +50,13 @@ public static class ServiceCollectionExtensions
             client.BaseAddress = new Uri(config?.IdentityBaseUrl ?? "https://identity.loko-merchant.com/");
         });
 
-        // Register HttpClient for API with token authentication
-        services.AddHttpClient<ILokoMerchantClient, LokoMerchantClient>(async (serviceProvider, client) =>
+        // Register HttpClient for API with authorization handler
+        services.AddHttpClient<ILokoMerchantClient, LokoMerchantClient>((serviceProvider, client) =>
         {
             var config = serviceProvider.GetService<IOptions<LokoMerchantConfig>>()?.Value;
             client.BaseAddress = new Uri(config?.ApiBaseUrl ?? "https://api.loko-merchant.com/");
-            
-            // Get token and set authorization header
-            if (config != null)
-            {
-                var identityClient = serviceProvider.GetRequiredService<ILokoMerchantIdentityClient>();
-                var tokenResponse = await identityClient.GetToken(config.ClientId, config.ClientSecret);
-                
-                if (tokenResponse != null)
-                {
-                    client.DefaultRequestHeaders.Authorization = 
-                        new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", tokenResponse.AccessToken);
-                }
-            }
-        });
+        })
+        .AddHttpMessageHandler<LokoAuthorizationHandler>();
 
         return services;
     }
@@ -101,31 +94,22 @@ public static class ServiceCollectionExtensions
             services.Configure(configureOptions);
         }
 
+        // Register token provider and authorization handler
+        services.AddScoped<IBearerTokenProvider, BearerTokenProvider>();
+        services.AddTransient<LokoAuthorizationHandler>();
+
         // Register HttpClient for identity server with custom URL
         services.AddHttpClient<ILokoMerchantIdentityClient, LokoMerchantIdentityClient>(client =>
         {
             client.BaseAddress = new Uri(identityBaseUrl);
         });
 
-        // Register HttpClient for API with custom URL and token authentication
-        services.AddHttpClient<ILokoMerchantClient, LokoMerchantClient>(async (serviceProvider, client) =>
+        // Register HttpClient for API with custom URL and authorization handler
+        services.AddHttpClient<ILokoMerchantClient, LokoMerchantClient>(client =>
         {
             client.BaseAddress = new Uri(apiBaseUrl);
-            
-            // Get token and set authorization header
-            var config = serviceProvider.GetService<IOptions<LokoMerchantConfig>>()?.Value;
-            if (config != null)
-            {
-                var identityClient = serviceProvider.GetRequiredService<ILokoMerchantIdentityClient>();
-                var tokenResponse = await identityClient.GetToken(config.ClientId, config.ClientSecret);
-                
-                if (tokenResponse != null)
-                {
-                    client.DefaultRequestHeaders.Authorization = 
-                        new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", tokenResponse.AccessToken);
-                }
-            }
-        });
+        })
+        .AddHttpMessageHandler<LokoAuthorizationHandler>();
 
         return services;
     }

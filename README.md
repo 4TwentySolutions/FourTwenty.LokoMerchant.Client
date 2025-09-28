@@ -47,6 +47,8 @@ var client = new LokoMerchantClient(httpClient);
 
 // Use the client
 await client.Store.UpdateStatus("store-id", StoreStatus.Unpause, new BranchStatusBodyRequest());
+var subscriptions = await client.Webhooks.GetSubscriptions();
+var importResult = await client.Menu.ImportProducts(new ImportProductRequest());
 ```
 
 ### Authentication
@@ -237,6 +239,20 @@ public class StoreController : ControllerBase
         {
             await _lokoClient.Store.UpdateStatus(storeId, StoreStatus.Pause, new BranchStatusBodyRequest());
             return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPost("menu/products")]
+    public async Task<IActionResult> ImportProducts(ImportProductRequest request)
+    {
+        try
+        {
+            var result = await _lokoClient.Menu.ImportProducts(request);
+            return Ok(new { ImportId = result?.Id });
         }
         catch (Exception ex)
         {

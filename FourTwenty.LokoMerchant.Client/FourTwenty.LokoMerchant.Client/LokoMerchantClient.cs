@@ -19,5 +19,10 @@ namespace FourTwenty.LokoMerchant.Client
         /// </summary>
         public IWebhooksProvider Webhooks => new WebhooksProvider(httpClient);
 
+        /// <summary>
+        /// Gets the menu provider for managing menu items, products, offers, and categories.
+        /// </summary>
+        public IMenuProvider Menu => new MenuProvider(httpClient);
+
     }
 }
