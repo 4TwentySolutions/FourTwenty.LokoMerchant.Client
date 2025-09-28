@@ -31,7 +31,7 @@ jobs:
         run: dotnet test ./FourTwenty.LokoMerchant.Client/FourTwenty.LokoMerchant.Client.sln --no-build --configuration Release --verbosity normal
 
       - name: Pack
-        run: dotnet pack ./FourTwenty.LokoMerchant.Client/FourTwenty.LokoMerchant.Client/FourTwenty.LokoMerchant.Client.csproj --no-build --configuration Release --output ./nupkg --version ${{ steps.get_version.outputs.version }}
+        run: dotnet pack ./FourTwenty.LokoMerchant.Client/FourTwenty.LokoMerchant.Client/FourTwenty.LokoMerchant.Client.csproj --no-build --configuration Release --output ./nupkg -p:Version=${{ steps.get_version.outputs.version }}
 
       - name: Publish to NuGet
         run: dotnet nuget push ./nupkg/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
