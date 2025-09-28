@@ -36,7 +36,7 @@ using FourTwenty.LokoMerchant.Client.Models;
 
 // Configure HttpClient with base URL and authentication
 var httpClient = new HttpClient();
-httpClient.BaseAddress = new Uri("https://api.loko-merchant.com/");
+httpClient.BaseAddress = new Uri("https://merchant-api.silpo.ua/");
 
 // Add bearer token to requests (see Authentication section below)
 httpClient.DefaultRequestHeaders.Authorization = 
@@ -60,7 +60,7 @@ using FourTwenty.LokoMerchant.Client;
 using FourTwenty.LokoMerchant.Client.Identity;
 
 // Create identity client for authentication
-var identityHttpClient = new HttpClient { BaseAddress = new Uri("https://identity.loko-merchant.com/") };
+var identityHttpClient = new HttpClient { BaseAddress = new Uri("https://auth.silpo.ua/") };
 var identityClient = new LokoMerchantIdentityClient(identityHttpClient);
 
 // Get access token
@@ -74,7 +74,7 @@ var tokenResponse = await identityClient.GetToken(config.ClientId, config.Client
 if (tokenResponse != null)
 {
     // Configure API client with the access token
-    var apiHttpClient = new HttpClient { BaseAddress = new Uri("https://api.loko-merchant.com/") };
+    var apiHttpClient = new HttpClient { BaseAddress = new Uri("https://merchant-api.silpo.ua/") };
     apiHttpClient.DefaultRequestHeaders.Authorization = 
         new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", tokenResponse.AccessToken);
     
@@ -141,13 +141,13 @@ builder.Services.Configure<LokoMerchantConfig>(
 // Register HttpClient for identity server
 builder.Services.AddHttpClient<ILokoMerchantIdentityClient, LokoMerchantIdentityClient>(client =>
 {
-    client.BaseAddress = new Uri("https://identity.loko-merchant.com/");
+    client.BaseAddress = new Uri("https://auth.silpo.ua/");
 });
 
 // Register HttpClient for API with token authentication
 builder.Services.AddHttpClient<ILokoMerchantClient, LokoMerchantClient>(async (serviceProvider, client) =>
 {
-    client.BaseAddress = new Uri("https://api.loko-merchant.com/");
+    client.BaseAddress = new Uri("https://merchant-api.silpo.ua/");
     
     // Get token and set authorization header
     var config = serviceProvider.GetRequiredService<IOptions<LokoMerchantConfig>>().Value;
@@ -180,13 +180,13 @@ builder.Services.Configure<LokoMerchantConfig>(
 // Register HttpClient for identity server
 builder.Services.AddHttpClient<ILokoMerchantIdentityClient, LokoMerchantIdentityClient>(client =>
 {
-    client.BaseAddress = new Uri("https://identity.loko-merchant.com/");
+    client.BaseAddress = new Uri("https://auth.silpo.ua/");
 });
 
 // Register HttpClient for API with token authentication
 builder.Services.AddHttpClient<ILokoMerchantClient, LokoMerchantClient>(async (serviceProvider, client) =>
 {
-    client.BaseAddress = new Uri("https://api.loko-merchant.com/");
+    client.BaseAddress = new Uri("https://merchant-api.silpo.ua/");
     
     // Get token and set authorization header
     var config = serviceProvider.GetRequiredService<IOptions<LokoMerchantConfig>>().Value;
@@ -210,8 +210,8 @@ var app = builder.Build();
   "LokoMerchant": {
     "ClientId": "your-client-id",
     "ClientSecret": "your-client-secret",
-    "IdentityBaseUrl": "https://identity.loko-merchant.com/",
-    "ApiBaseUrl": "https://api.loko-merchant.com/"
+    "IdentityBaseUrl": "https://auth.silpo.ua/",
+    "ApiBaseUrl": "https://merchant-api.silpo.ua/"
   }
 }
 ```

@@ -47,14 +47,14 @@ public static class ServiceCollectionExtensions
         services.AddHttpClient<ILokoMerchantIdentityClient, LokoMerchantIdentityClient>((serviceProvider, client) =>
         {
             var config = serviceProvider.GetService<IOptions<LokoMerchantConfig>>()?.Value;
-            client.BaseAddress = new Uri(config?.IdentityBaseUrl ?? "https://identity.loko-merchant.com/");
+            client.BaseAddress = new Uri(config?.IdentityBaseUrl ?? "https://auth.silpo.ua/");
         });
 
         // Register HttpClient for API with authorization handler
         services.AddHttpClient<ILokoMerchantClient, LokoMerchantClient>((serviceProvider, client) =>
         {
             var config = serviceProvider.GetService<IOptions<LokoMerchantConfig>>()?.Value;
-            client.BaseAddress = new Uri(config?.ApiBaseUrl ?? "https://api.loko-merchant.com/");
+            client.BaseAddress = new Uri(config?.ApiBaseUrl ?? "https://merchant-api.silpo.ua/");
         })
         .AddHttpMessageHandler<LokoAuthorizationHandler>();
 
@@ -134,7 +134,7 @@ public static class ServiceCollectionExtensions
             else
             {
                 var config = serviceProvider.GetService<IOptions<LokoMerchantConfig>>()?.Value;
-                client.BaseAddress = new Uri(config?.IdentityBaseUrl ?? "https://identity.loko-merchant.com/");
+                client.BaseAddress = new Uri(config?.IdentityBaseUrl ?? "https://auth.silpo.ua/");
             }
         });
 

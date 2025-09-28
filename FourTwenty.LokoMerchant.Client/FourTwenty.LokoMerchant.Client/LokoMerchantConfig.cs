@@ -23,13 +23,13 @@
         /// Used for OAuth 2.0 token authentication.
         /// Defaults to the production identity server URL.
         /// </summary>
-        public string IdentityBaseUrl { get; init; } = "https://identity.loko-merchant.com/";
+        public string IdentityBaseUrl { get; init; } = "https://auth.silpo.ua/";
 
         /// <summary>
         /// The base URL for the Loko Merchant API server.
         /// Used for all merchant API operations.
         /// Defaults to the production API server URL.
         /// </summary>
-        public string ApiBaseUrl { get; init; } = "https://api.loko-merchant.com/";
+        public string ApiBaseUrl { get; init; } = "https://merchant-api.silpo.ua/";
     }
 }
