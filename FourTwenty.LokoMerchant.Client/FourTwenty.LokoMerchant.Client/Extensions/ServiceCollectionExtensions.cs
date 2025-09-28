@@ -12,6 +12,7 @@ public static class ServiceCollectionExtensions
     /// <summary>
     /// Adds the Loko Merchant client services to the specified IServiceCollection.
     /// This method registers both the identity client for authentication and the main API client.
+    /// URLs can be configured via LokoMerchantConfig properties or will default to production endpoints.
     /// </summary>
     /// <param name="services">The IServiceCollection to add services to.</param>
     /// <param name="configureOptions">An optional action to configure the LokoMerchantConfig.</param>
@@ -22,6 +23,8 @@ public static class ServiceCollectionExtensions
     /// {
     ///     options.ClientId = "your-client-id";
     ///     options.ClientSecret = "your-client-secret";
+    ///     options.IdentityBaseUrl = "https://staging-identity.loko-merchant.com/"; // Optional
+    ///     options.ApiBaseUrl = "https://staging-api.loko-merchant.com/"; // Optional
     /// });
     /// </code>
     /// </example>
@@ -36,18 +39,19 @@ public static class ServiceCollectionExtensions
         }
 
         // Register HttpClient for identity server
-        services.AddHttpClient<ILokoMerchantIdentityClient, LokoMerchantIdentityClient>(client =>
+        services.AddHttpClient<ILokoMerchantIdentityClient, LokoMerchantIdentityClient>((serviceProvider, client) =>
         {
-            client.BaseAddress = new Uri("https://identity.loko-merchant.com/");
+            var config = serviceProvider.GetService<IOptions<LokoMerchantConfig>>()?.Value;
+            client.BaseAddress = new Uri(config?.IdentityBaseUrl ?? "https://identity.loko-merchant.com/");
         });
 
         // Register HttpClient for API with token authentication
         services.AddHttpClient<ILokoMerchantClient, LokoMerchantClient>(async (serviceProvider, client) =>
         {
-            client.BaseAddress = new Uri("https://api.loko-merchant.com/");
+            var config = serviceProvider.GetService<IOptions<LokoMerchantConfig>>()?.Value;
+            client.BaseAddress = new Uri(config?.ApiBaseUrl ?? "https://api.loko-merchant.com/");
             
             // Get token and set authorization header
-            var config = serviceProvider.GetService<IOptions<LokoMerchantConfig>>()?.Value;
             if (config != null)
             {
                 var identityClient = serviceProvider.GetRequiredService<ILokoMerchantIdentityClient>();
@@ -131,15 +135,23 @@ public static class ServiceCollectionExtensions
     /// Use this when you need only token management functionality.
     /// </summary>
     /// <param name="services">The IServiceCollection to add services to.</param>
-    /// <param name="identityBaseUrl">The base URL for the identity server. Defaults to production URL if not specified.</param>
+    /// <param name="identityBaseUrl">The base URL for the identity server. If not specified, uses the configured IdentityBaseUrl or defaults to production URL.</param>
     /// <returns>The IServiceCollection for method chaining.</returns>
     public static IServiceCollection AddLokoMerchantIdentityClient(
         this IServiceCollection services,
         string? identityBaseUrl = null)
     {
-        services.AddHttpClient<ILokoMerchantIdentityClient, LokoMerchantIdentityClient>(client =>
+        services.AddHttpClient<ILokoMerchantIdentityClient, LokoMerchantIdentityClient>((serviceProvider, client) =>
         {
-            client.BaseAddress = new Uri(identityBaseUrl ?? "https://identity.loko-merchant.com/");
+            if (identityBaseUrl != null)
+            {
+                client.BaseAddress = new Uri(identityBaseUrl);
+            }
+            else
+            {
+                var config = serviceProvider.GetService<IOptions<LokoMerchantConfig>>()?.Value;
+                client.BaseAddress = new Uri(config?.IdentityBaseUrl ?? "https://identity.loko-merchant.com/");
+            }
         });
 
         return services;

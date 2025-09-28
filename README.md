@@ -97,14 +97,17 @@ builder.Services.AddLokoMerchantClient(options =>
 {
     options.ClientId = builder.Configuration["LokoMerchant:ClientId"];
     options.ClientSecret = builder.Configuration["LokoMerchant:ClientSecret"];
+    // Optional: Configure custom URLs (defaults to production)
+    options.IdentityBaseUrl = builder.Configuration["LokoMerchant:IdentityBaseUrl"]; 
+    options.ApiBaseUrl = builder.Configuration["LokoMerchant:ApiBaseUrl"];
 });
 
 var app = builder.Build();
 ```
 
-### Using Custom URLs
+### Using Method Parameters for URLs (Alternative)
 
-For staging/testing environments or custom deployments:
+You can also pass URLs directly as method parameters for staging/testing environments:
 
 ```csharp
 builder.Services.AddLokoMerchantClient(
@@ -116,6 +119,8 @@ builder.Services.AddLokoMerchantClient(
         options.ClientSecret = builder.Configuration["LokoMerchant:ClientSecret"];
     });
 ```
+
+**Note:** Using configuration properties is the preferred approach as it's more flexible and testable.
 
 ### Manual HttpClient Factory Setup
 
@@ -202,10 +207,14 @@ var app = builder.Build();
 {
   "LokoMerchant": {
     "ClientId": "your-client-id",
-    "ClientSecret": "your-client-secret"
+    "ClientSecret": "your-client-secret",
+    "IdentityBaseUrl": "https://identity.loko-merchant.com/",
+    "ApiBaseUrl": "https://api.loko-merchant.com/"
   }
 }
 ```
+
+The `IdentityBaseUrl` and `ApiBaseUrl` properties are optional and will default to production URLs if not specified.
 
 ### Using in Controllers
 
