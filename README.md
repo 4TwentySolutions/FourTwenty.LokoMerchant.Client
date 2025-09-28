@@ -113,8 +113,8 @@ You can also pass URLs directly as method parameters for staging/testing environ
 
 ```csharp
 builder.Services.AddLokoMerchantClient(
-    identityBaseUrl: "https://staging-identity.loko-merchant.com/",
-    apiBaseUrl: "https://staging-api.loko-merchant.com/",
+    identityBaseUrl: "https://identity-public-qa.foodtech.team/",
+    apiBaseUrl: "https://global-api-qa.foodtech.team/public/merchant",
     options =>
     {
         options.ClientId = builder.Configuration["LokoMerchant:ClientId"];

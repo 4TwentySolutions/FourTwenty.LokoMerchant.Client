@@ -24,8 +24,8 @@ public static class ServiceCollectionExtensions
     /// {
     ///     options.ClientId = "your-client-id";
     ///     options.ClientSecret = "your-client-secret";
-    ///     options.IdentityBaseUrl = "https://staging-identity.loko-merchant.com/"; // Optional
-    ///     options.ApiBaseUrl = "https://staging-api.loko-merchant.com/"; // Optional
+    ///     options.IdentityBaseUrl = "https://identity-public-qa.foodtech.team/"; // Optional
+    ///     options.ApiBaseUrl = "https://global-api-qa.foodtech.team/public/merchant"; // Optional
     /// });
     /// </code>
     /// </example>
@@ -73,12 +73,12 @@ public static class ServiceCollectionExtensions
     /// <example>
     /// <code>
     /// services.AddLokoMerchantClient(
-    ///     "https://staging-identity.loko-merchant.com/",
-    ///     "https://staging-api.loko-merchant.com/",
+    ///     "https://identity-public-qa.foodtech.team/",
+    ///     "https://global-api-qa.foodtech.team/public/merchant",
     ///     options =>
     ///     {
-    ///         options.ClientId = "staging-client-id";
-    ///         options.ClientSecret = "staging-client-secret";
+    ///         options.ClientId = "qa-client-id";
+    ///         options.ClientSecret = "qa-client-secret";
     ///     });
     /// </code>
     /// </example>
