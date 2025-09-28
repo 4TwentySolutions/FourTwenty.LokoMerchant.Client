@@ -14,6 +14,7 @@
     <PackageTags>loko;delivery;merchant;client;api;420</PackageTags>
     <RepositoryUrl>https://github.com/4TwentySolutions/FourTwenty.LokoMerchant.Client</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>../../README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
