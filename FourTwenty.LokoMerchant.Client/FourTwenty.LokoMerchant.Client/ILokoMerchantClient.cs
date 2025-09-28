@@ -20,5 +20,10 @@
         /// Gets the menu provider for managing menu items, products, offers, and categories.
         /// </summary>
         IMenuProvider Menu { get; }
+
+        /// <summary>
+        /// Gets the orders provider for managing orders and related operations.
+        /// </summary>
+        IOrdersProvider Orders { get; }
     }
 }

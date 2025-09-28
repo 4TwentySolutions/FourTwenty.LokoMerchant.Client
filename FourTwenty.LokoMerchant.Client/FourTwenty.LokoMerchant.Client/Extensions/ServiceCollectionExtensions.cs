@@ -1,5 +1,3 @@
-using FourTwenty.LokoMerchant.Client.Authorization;
-using FourTwenty.LokoMerchant.Client.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 

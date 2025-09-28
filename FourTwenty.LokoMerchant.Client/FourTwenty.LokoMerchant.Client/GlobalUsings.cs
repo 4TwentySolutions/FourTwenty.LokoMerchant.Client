@@ -11,3 +11,6 @@ global using FourTwenty.LokoMerchant.Client.Models.Responses;
 global using FourTwenty.LokoMerchant.Client.Interfaces;
 global using System.Net.Http.Headers;
 global using FourTwenty.LokoMerchant.Client.Identity;
+global using FourTwenty.LokoMerchant.Client.Models.Responses.Orders;
+global using System.Web;
+global using FourTwenty.LokoMerchant.Client.Authorization;

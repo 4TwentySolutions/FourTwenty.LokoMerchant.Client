@@ -24,5 +24,11 @@ namespace FourTwenty.LokoMerchant.Client
         /// </summary>
         public IMenuProvider Menu => new MenuProvider(httpClient);
 
+
+        /// <summary>
+        /// Gets the orders provider for managing orders and related operations.
+        /// </summary>
+        public IOrdersProvider Orders => new OrdersProvider(httpClient);
+
     }
 }
