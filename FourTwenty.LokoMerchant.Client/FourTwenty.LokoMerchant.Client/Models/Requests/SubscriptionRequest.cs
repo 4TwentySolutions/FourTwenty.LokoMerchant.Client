@@ -17,7 +17,7 @@
         /// List of webhook events to subscribe to.
         /// Determines which types of events will trigger webhook notifications.
         /// </summary>
-        [JsonPropertyName("events"), JsonConverter(typeof(WebhookEventJsonConverter))]
+        [JsonPropertyName("events")]
         public List<WebhookEvent>? Events { get; init; }
 
         /// <summary>
