@@ -9,8 +9,8 @@ public record WebhookEnvelope<T>
     /// <summary>
     /// The event type identifier (e.g., "order.new", "order.status.changed").
     /// </summary>
-    [JsonPropertyName("event")]
-    public required string Event { get; init; }
+    [JsonPropertyName("event"), JsonConverter(typeof(WebhookEventJsonConverter))]
+    public required WebhookEvent Event { get; init; }
 
     /// <summary>
     /// The webhook payload data specific to the event type.
