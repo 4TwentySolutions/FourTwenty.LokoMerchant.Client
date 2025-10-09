@@ -32,6 +32,11 @@
         public static readonly WebhookEvent OrderCourierAssigned = new("order.courier.assigned");
 
         /// <summary>
+        /// Triggered when the availability of a store changes.
+        /// </summary>
+        public static readonly WebhookEvent StoreAvailabilityChanged = new("store.availability.changed");
+
+        /// <summary>
         /// Determines whether this webhook event equals another webhook event.
         /// </summary>
         /// <param name="other">The other webhook event to compare with.</param>
