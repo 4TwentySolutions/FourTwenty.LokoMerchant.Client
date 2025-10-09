@@ -4,7 +4,6 @@
     {
         public async Task<LokoAuthResponse?> GetToken(string clientId, string clientSecret, CancellationToken ct = default)
         {
-
             var encodedContent = new FormUrlEncodedContent([
                 new KeyValuePair<string, string>("grant_type", "client_credentials"),
                 new KeyValuePair<string, string>("client_id", clientId),
