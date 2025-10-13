@@ -9,7 +9,7 @@
         /// <returns>List of webhook subscriptions</returns>
         public async Task<PagedResponse<SubscriptionResponse>?> GetSubscriptions(CancellationToken ct = default)
         {
-            var response = await httpClient.GetAsync($"/v1/merchant/callback/subscriptions", ct);
+            var response = await httpClient.GetAsync($"v1/merchant/callback/subscriptions", ct);
             if (response.IsSuccessStatusCode)
                 return await response.Content.ReadFromJsonAsync<PagedResponse<SubscriptionResponse>>(
                     cancellationToken: ct);
@@ -27,7 +27,7 @@
         public async Task<SubscriptionResponse?> CreateSubscription(SubscriptionRequest request,
             CancellationToken ct = default)
         {
-            var response = await httpClient.PostAsJsonAsync($"/v1/merchant/callback/subscriptions", request, ct);
+            var response = await httpClient.PostAsJsonAsync($"v1/merchant/callback/subscriptions", request, ct);
             if (response.IsSuccessStatusCode) return await response.Content.ReadFromJsonAsync<SubscriptionResponse>(ct);
             await ErrorHandlingHelper.HandleError(response, ct);
             return null;
@@ -44,7 +44,7 @@
             CancellationToken ct = default)
         {
             var response =
-                await httpClient.PutAsJsonAsync($"/v1/merchant/callback/subscriptions/{subscriptionId}", request, ct);
+                await httpClient.PutAsJsonAsync($"v1/merchant/callback/subscriptions/{subscriptionId}", request, ct);
             if (response.IsSuccessStatusCode) return await response.Content.ReadFromJsonAsync<SubscriptionResponse>(ct);
             await ErrorHandlingHelper.HandleError(response, ct);
             return null;
@@ -59,7 +59,7 @@
         /// <returns></returns>
         public async Task DeleteSubscription(string subscriptionId, CancellationToken ct = default)
         {
-            var response = await httpClient.DeleteAsync($"/v1/merchant/callback/subscriptions/{subscriptionId}", ct);
+            var response = await httpClient.DeleteAsync($"v1/merchant/callback/subscriptions/{subscriptionId}", ct);
             if (response.IsSuccessStatusCode) return;
             await ErrorHandlingHelper.HandleError(response, ct);
         }
@@ -71,7 +71,7 @@
         /// <returns>List of subscription events</returns>
         public async Task<PagedResponse<SubscriptionEventResponse>?> GetSubscriptionEvents(CancellationToken ct = default)
         {
-            var response = await httpClient.GetAsync($"/v1/merchant/callback/events", ct);
+            var response = await httpClient.GetAsync($"v1/merchant/callback/events", ct);
             if (response.IsSuccessStatusCode)
                 return await response.Content.ReadFromJsonAsync<PagedResponse<SubscriptionEventResponse>>(
                     cancellationToken: ct);

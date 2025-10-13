@@ -10,7 +10,7 @@
                 new KeyValuePair<string, string>("client_secret", clientSecret)
             ]);
 
-            var response = await httpClient.PostAsync("/connect/token", encodedContent, ct);
+            var response = await httpClient.PostAsync("connect/token", encodedContent, ct);
             if (response.IsSuccessStatusCode) return await response.Content.ReadFromJsonAsync<LokoAuthResponse>(ct);
 
             await ErrorHandlingHelper.HandleError(response, ct);

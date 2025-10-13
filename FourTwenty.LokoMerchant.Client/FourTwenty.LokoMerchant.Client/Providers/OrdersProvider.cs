@@ -5,7 +5,7 @@
         public async Task<PagedResponse<OrderResponse>?> GetOrders(GetOrdersRequest request, CancellationToken ct = default)
         {
             var query = BuildQueryString(request);
-            var url = "/v1/merchant/orders" + query;
+            var url = "v1/merchant/orders" + query;
             var response = await httpClient.GetAsync(url, ct);
             if (response.IsSuccessStatusCode)
                 return await response.Content.ReadFromJsonAsync<PagedResponse<OrderResponse>>(cancellationToken: ct);
@@ -16,7 +16,7 @@
 
         public async Task<OrderResponse?> GetOrder(string orderId, CancellationToken ct = default)
         {
-            var response = await httpClient.GetAsync($"/v1/merchant/orders/{orderId}", ct);
+            var response = await httpClient.GetAsync($"v1/merchant/orders/{orderId}", ct);
             if (response.IsSuccessStatusCode)
                 return await response.Content.ReadFromJsonAsync<OrderResponse>(cancellationToken: ct);
 
@@ -26,7 +26,7 @@
 
         public async Task UpdateOrderStatus(string orderId, UpdateOrderStatusRequest request, CancellationToken ct = default)
         {
-            var response = await httpClient.PatchAsJsonAsync($"/v1/merchant/orders/{orderId}/status-change", request, ct);
+            var response = await httpClient.PatchAsJsonAsync($"v1/merchant/orders/{orderId}/status-change", request, ct);
             if (response.IsSuccessStatusCode) return;
             await ErrorHandlingHelper.HandleError(response, ct);
         }

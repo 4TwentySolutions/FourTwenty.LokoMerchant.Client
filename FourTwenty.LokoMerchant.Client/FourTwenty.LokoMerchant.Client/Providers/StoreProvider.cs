@@ -12,7 +12,7 @@
         /// <returns></returns>
         public async Task UpdateStatus(string storeId, StoreStatus status, BranchStatusBodyRequest request, CancellationToken ct = default)
         {
-            var response = await httpClient.PostAsJsonAsync($"/v1/merchant/stores/{storeId}/schedule/{status}", request, cancellationToken: ct);
+            var response = await httpClient.PostAsJsonAsync($"v1/merchant/stores/{storeId}/schedule/{status}", request, cancellationToken: ct);
             if (response.IsSuccessStatusCode) return;
 
             await ErrorHandlingHelper.HandleError(response, ct);
@@ -27,7 +27,7 @@
         /// <returns></returns>
         public async Task UpdateSchedule(string storeId, IEnumerable<BranchDaySchedule> schedules, CancellationToken ct = default)
         {
-            var response = await httpClient.PostAsJsonAsync($"/v1/merchant/stores/{storeId}/schedule", schedules, cancellationToken: ct);
+            var response = await httpClient.PostAsJsonAsync($"v1/merchant/stores/{storeId}/schedule", schedules, cancellationToken: ct);
             if (response.IsSuccessStatusCode) return;
             await ErrorHandlingHelper.HandleError(response, ct);
         }
@@ -41,7 +41,7 @@
         public async Task UpdateStoresSchedule(IEnumerable<BranchDayStoreSchedule> schedules,
             CancellationToken ct = default)
         {
-            var response = await httpClient.PostAsJsonAsync($"/v1/merchant/schedule", schedules, cancellationToken: ct);
+            var response = await httpClient.PostAsJsonAsync($"v1/merchant/schedule", schedules, cancellationToken: ct);
             if (response.IsSuccessStatusCode) return;
             await ErrorHandlingHelper.HandleError(response, ct);
         }
