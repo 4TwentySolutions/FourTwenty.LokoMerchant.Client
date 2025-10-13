@@ -12,7 +12,7 @@
         /// <returns></returns>
         public async Task UpdateStatus(string storeId, StoreStatus status, BranchStatusBodyRequest request, CancellationToken ct = default)
         {
-            var response = await httpClient.PostAsJsonAsync($"v1/merchant/stores/{storeId}/schedule/{status}", request, cancellationToken: ct);
+            var response = await httpClient.PostAsJsonAsync($"v1/merchant/stores/{storeId}/schedule/{status.ToString().ToLower()}", request, cancellationToken: ct);
             if (response.IsSuccessStatusCode) return;
 
             await ErrorHandlingHelper.HandleError(response, ct);
