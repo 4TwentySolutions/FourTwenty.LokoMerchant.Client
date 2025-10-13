@@ -13,6 +13,6 @@
         public int? Code { get; init; }
 
         [JsonPropertyName("errors")]
-        public string[]? Errors { get; init; }
+        public Dictionary<string, string[]>? Errors { get; init; }
     }
 }

@@ -17,7 +17,7 @@
                     {
                         Message = "Access forbidden. You do not have permission to access this resource.",
                         Code = (int)HttpStatusCode.Forbidden,
-                        Errors = [rawMessage]
+                        Errors = new Dictionary<string, string[]>() { { "raw", [rawMessage] } }
                     });
                 default:
                     response.EnsureSuccessStatusCode();
