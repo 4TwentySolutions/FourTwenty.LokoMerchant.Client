@@ -9,7 +9,7 @@
         [JsonPropertyName("title")]
         public required string Title { get; init; }
 
-        [JsonPropertyName("type"), JsonConverter(typeof(JsonStringEnumConverter<OptionGroupType>))]
+        [JsonPropertyName("type"), JsonConverter(typeof(LowerCaseEnumConverter<OptionGroupType>))]
         public required OptionGroupType Type { get; init; }
 
         [JsonPropertyName("min")]

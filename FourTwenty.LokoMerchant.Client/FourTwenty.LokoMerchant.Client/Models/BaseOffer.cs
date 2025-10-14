@@ -23,7 +23,7 @@
         /// <summary>
         /// Status of the offer
         /// </summary>
-        [JsonPropertyName("status"), JsonConverter(typeof(JsonStringEnumConverter<OfferStatus>))]
+        [JsonPropertyName("status"), JsonConverter(typeof(LowerCaseEnumConverter<OfferStatus>))]
         public OfferStatus? Status { get; init; }
     }
 }

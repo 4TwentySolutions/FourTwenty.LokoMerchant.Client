@@ -8,7 +8,7 @@ namespace FourTwenty.LokoMerchant.Client.Models.Responses.Orders
         /// <summary>
         /// The actor who performed the cancellation (e.g., customer, merchant).
         /// </summary>
-        [JsonPropertyName("actor"), JsonConverter(typeof(JsonStringEnumConverter<CancellationActor>))]
+        [JsonPropertyName("actor"), JsonConverter(typeof(LowerCaseEnumConverter<CancellationActor>))]
         public CancellationActor? Actor { get; init; }
 
         /// <summary>
