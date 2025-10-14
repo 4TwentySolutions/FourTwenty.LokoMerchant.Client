@@ -3,7 +3,7 @@ namespace FourTwenty.LokoMerchant.Client.Models.Webhooks;
 /// <summary>
 /// Represents webhook data for new order events.
 /// </summary>
-public record OrderNewWebhookData
+public record OrderWebhookData
 {
     /// <summary>
     /// The unique identifier of the order.
@@ -72,12 +72,6 @@ public record OrderNewWebhookData
     public OrderCourierResponse? Courier { get; init; }
 
     /// <summary>
-    /// List of promotions applied to the order.
-    /// </summary>
-    [JsonPropertyName("promos")]
-    public List<OrderPromoResponse>? Promos { get; init; }
-
-    /// <summary>
     /// The timestamp when the order was created.
     /// </summary>
     [JsonPropertyName("createdAt")]
@@ -94,18 +88,4 @@ public record OrderNewWebhookData
     /// </summary>
     [JsonPropertyName("isTest")]
     public bool? IsTest { get; init; }
-}
-
-/// <summary>
-/// Represents a promotional offer applied to an order in webhook payloads.
-/// Uses JsonExtensionData to capture all fields dynamically until the exact structure is known.
-/// </summary>
-public record OrderPromoResponse
-{
-    /// <summary>
-    /// Captures any additional fields from the webhook payload that are not explicitly mapped.
-    /// Access promo data via this dictionary until the full structure is defined.
-    /// </summary>
-    [JsonExtensionData]
-    public Dictionary<string, JsonElement>? AdditionalData { get; init; }
 }
