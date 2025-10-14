@@ -12,13 +12,13 @@
         [JsonPropertyName("type"), JsonConverter(typeof(LowerCaseEnumConverter<OptionGroupType>))]
         public required OptionGroupType Type { get; init; }
 
-        [JsonPropertyName("min")]
+        [JsonPropertyName("min"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? Min { get; init; }
 
-        [JsonPropertyName("max")]
+        [JsonPropertyName("max"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? Max { get; init; }
 
         [JsonPropertyName("options")]
-        public List<OptionInner>? Options { get; init; }
+        public required List<OptionInner> Options { get; init; }
     }
 }

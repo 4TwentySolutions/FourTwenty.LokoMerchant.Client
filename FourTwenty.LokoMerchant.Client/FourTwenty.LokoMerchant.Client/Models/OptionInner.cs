@@ -6,7 +6,7 @@
         public required string Sku { get; init; }
         [JsonPropertyName("sortOrder")]
         public required int SortOrder { get; init; }
-        [JsonPropertyName("max")]
+        [JsonPropertyName("max"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? Max { get; init; }
     }
 }

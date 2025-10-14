@@ -8,10 +8,10 @@
         [JsonPropertyName("products")]
         public required List<MenuProduct> Products { get; init; }
 
-        [JsonPropertyName("options")]
+        [JsonPropertyName("options"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public List<Option>? Options { get; init; }
 
-        [JsonPropertyName("optionGroups")]
+        [JsonPropertyName("optionGroups"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public List<OptionGroup>? OptionGroups { get; init; }
     }
 }

@@ -11,7 +11,7 @@
         /// <summary>
         /// Old price, for showing discounts
         /// </summary>
-        [JsonPropertyName("oldPrice")]
+        [JsonPropertyName("oldPrice"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public decimal? OldPrice { get; init; }
 
         /// <summary>
@@ -23,7 +23,7 @@
         /// <summary>
         /// Status of the offer
         /// </summary>
-        [JsonPropertyName("status"), JsonConverter(typeof(LowerCaseEnumConverter<OfferStatus>))]
+        [JsonPropertyName("status"), JsonConverter(typeof(LowerCaseEnumConverter<OfferStatus>)), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public OfferStatus? Status { get; init; }
     }
 }
